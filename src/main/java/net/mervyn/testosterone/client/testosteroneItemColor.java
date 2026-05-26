@@ -1,0 +1,34 @@
+package net.mervyn.testosterone.client;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+
+public class testosteroneItemColor implements ItemColor {
+
+    @Override
+    public int getColor(ItemStack pStack, int pTintIndex) {
+        if (pStack.getTag() != null) {
+            String nbtColor = pStack.getTag().getString("color");
+
+            for (int pId = 0; pId < 16; pId++) {
+                if (DyeColor.byId(pId).name().toLowerCase().equals(nbtColor)) {
+                    float[] color = DyeColor.byId(pId).getTextureDiffuseColors();
+                    return ((int)(color[0] * 255) << 16) | ((int)(color[1] * 255) << 8) | ((int)(color[2] * 255));
+                }
+            }
+        }
+
+        long currentTick = 0;
+
+        if (Minecraft.getInstance().level != null) {
+            currentTick = Minecraft.getInstance().level.getGameTime();
+        }
+
+        short pId = (short) ((currentTick / 12) % 16);
+
+        float[] color = DyeColor.byId(pId).getTextureDiffuseColors();
+        return ((int)(color[0] * 255) << 16) | ((int)(color[1] * 255) << 8) | ((int)(color[2] * 255));
+    }
+}

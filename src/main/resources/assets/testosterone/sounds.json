@@ -1,0 +1,82 @@
+{
+  "john_rock_deactivation": {
+    "subtitle": "sounds.testosterone.john_rock_deactivation",
+    "sounds": [
+      "testosterone:john_rock_deactivation"
+    ]
+  },
+  "john_rock_activation": {
+    "subtitle": "sounds.testosterone.john_rock_activation",
+    "sounds": [
+      "testosterone:john_rock_activation"
+    ]
+  },
+  "mach_1_sfx": {
+    "subtitle": "sounds.testosterone.mach_1_sfx",
+    "preload": true,
+    "sounds": [
+      "testosterone:mach_1_sfx"
+    ]
+  },
+  "mach_2_sfx": {
+    "subtitle": "sounds.testosterone.mach_2_sfx",
+    "preload": true,
+    "sounds": [
+      "testosterone:mach_2_sfx"
+    ]
+  },
+  "ground_slam_sfx": {
+    "subtitle": "sounds.testosterone.ground_slam_sfx",
+    "sounds": [
+      "testosterone:ground_slam_sfx"
+    ]
+  },
+  "enemy_hit_sfx": {
+    "subtitle": "sounds.testosterone.enemy_hit_sfx",
+    "sounds": [
+      "testosterone:enemy_hit_sfx"
+    ]
+  },
+  "rat_sniff1": {
+    "subtitle": "sounds.testosterone.rat_sounds",
+    "sounds": [
+      "testosterone:rat_sniff1"
+    ]
+  },
+  "rat_sniff2": {
+    "subtitle": "sounds.testosterone.rat_sounds",
+    "sounds": [
+      "testosterone:rat_sniff2"
+    ]
+  },
+  "rat_squeak1": {
+    "subtitle": "sounds.testosterone.rat_sounds",
+    "sounds": [
+      "testosterone:rat_squeak1"
+    ]
+  },
+  "rat_squeak2": {
+    "subtitle": "sounds.testosterone.rat_sounds",
+    "sounds": [
+      "testosterone:rat_squeak2"
+    ]
+  },
+  "rat_run": {
+    "subtitle": "sounds.testosterone.rat_run",
+    "sounds": [
+      "testosterone:rat_run"
+    ]
+  },
+  "rat_hurt1": {
+    "subtitle": "sounds.testosterone.rat_hurts",
+    "sounds": [
+      "testosterone:rat_hurt1"
+    ]
+  },
+  "rat_hurt2": {
+    "subtitle": "sounds.testosterone.rat_hurts",
+    "sounds": [
+      "testosterone:rat_hurt2"
+    ]
+  }
+}

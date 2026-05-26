@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "testosterone",
+	"version": "${version}",
+	"name": "Create: Testosterone",
+	"description": "An Addon for Create: Estrogen that adds usable testosterone, along with new items and more!",
+	"authors": [
+		"mifort",
+		"JonMyDude"
+	],
+	"contact": {
+		"homepage": "https://github.com/mifort-net/createTestosterone"
+	},
+	"license": "GPL-3.0-only",
+	"icon": "assets/testosterone/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.mervyn.testosterone.testosterone"
+		],
+		"client": [
+			"net.mervyn.testosterone.client.testosteroneClient"
+		],
+		"fabric-datagen": [
+			"net.mervyn.testosterone.datagen.TestosteroneDataGenerator"
+		]
+	},
+	"mixins": [
+		"mixins.testosterone.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"create": "*",
+		"trinkets": "*",
+		"cloth-config": "*"
+	}
+}
+

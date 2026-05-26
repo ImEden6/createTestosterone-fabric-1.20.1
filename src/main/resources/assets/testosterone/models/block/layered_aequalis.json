@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "testosterone:block/aequalis_cut_layered",
+    "particle": "testosterone:block/aequalis_cut_layered"
+  }
+}
