@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.mervyn.testosterone.blocks.testosteroneBlockEntities;
+import net.mervyn.testosterone.blocks.testosteroneModBlocks;
 import net.mervyn.testosterone.blocks.decanterCentrifuge.decanterCentrifugeRenderer;
 import net.mervyn.testosterone.entities.testosteroneEntities;
 import net.mervyn.testosterone.entities.testosteroneModelLayers;
@@ -45,7 +46,8 @@ public class testosteroneClient implements ClientModInitializer {
         // Register packets
         testosteroneModMessages.registerClient();
 
-        // Render layers for fluids
+        // Render layers for fluids and translucent blocks
+        BlockRenderLayerMap.INSTANCE.putBlock(testosteroneModBlocks.JOHN_ROCK.get(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(testosteroneFluids.CHOLESTEROL_FLUID.getSource(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(testosteroneFluids.CHOLESTEROL_FLUID.get(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(testosteroneFluids.DILUTED_ZINC_FLUID.getSource(), RenderType.translucent());
