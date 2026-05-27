@@ -64,11 +64,11 @@ public class decantation extends ProcessingRecipe<Inventory> {
             if (view.isResourceBlank()) continue;
 
             FluidStack portingStack =
-                    new FluidStack(view.getResource().getFluid(), view.getAmount() / 81);
+                    new FluidStack(view.getResource().getFluid(), view.getAmount());
 
             if (ingredient.test(portingStack)) {
                 matchingVariant = view.getResource();
-                requiredDroplets = ingredient.getRequiredAmount() * 81L;
+                requiredDroplets = ingredient.getRequiredAmount();
                 if (view.getAmount() >= requiredDroplets) {
                     break;
                 } else {
@@ -80,7 +80,7 @@ public class decantation extends ProcessingRecipe<Inventory> {
         if (matchingVariant == null) return false;
 
         FluidVariant resultVariant = FluidVariant.of(resultStack.getFluid(), resultStack.getOrCreateTag());
-        long resultDroplets = resultStack.getAmount() * 81L;
+        long resultDroplets = resultStack.getAmount();
 
         try (Transaction transaction = Transaction.openOuter()) {
             long extracted = inputHandler.extract(matchingVariant, requiredDroplets, transaction);

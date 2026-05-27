@@ -46,8 +46,10 @@ public class testosteroneClient implements ClientModInitializer {
         // Register packets
         testosteroneModMessages.registerClient();
 
-        // Render layers for fluids and translucent blocks
+        // Render layers for blocks and fluids
         BlockRenderLayerMap.INSTANCE.putBlock(testosteroneModBlocks.JOHN_ROCK.get(), RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(testosteroneModBlocks.FRAGILE_COPYCAT_BASE.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(testosteroneModBlocks.FRAGILE_COPYCAT_BLOCK.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putFluid(testosteroneFluids.CHOLESTEROL_FLUID.getSource(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(testosteroneFluids.CHOLESTEROL_FLUID.get(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(testosteroneFluids.DILUTED_ZINC_FLUID.getSource(), RenderType.translucent());

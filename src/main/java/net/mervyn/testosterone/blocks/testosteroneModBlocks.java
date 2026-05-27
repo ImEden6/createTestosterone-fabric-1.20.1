@@ -125,10 +125,10 @@ public class testosteroneModBlocks {
             register("cheese_block", new Block(BlockBehaviour.Properties.copy(Blocks.HONEYCOMB_BLOCK)), new Item.Properties().food(testosteroneModFoods.CHEESE_BLOCK));
 
     public static final BlockEntry<fragileCopycatBase> FRAGILE_COPYCAT_BASE =
-            registerNoItem("fragile_copycat_base", new fragileCopycatBase(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL)));
+            registerNoItem("fragile_copycat_base", new fragileCopycatBase(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL).noOcclusion()));
 
     public static final BlockEntry<fragileCopycatBlock> FRAGILE_COPYCAT_BLOCK =
-            register("fragile_copycat_block", new fragileCopycatBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL)));
+            register("fragile_copycat_block", new fragileCopycatBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL).noOcclusion()));
 
     public static final BlockEntry<decanterCentrifugeBlock> DECANTER_CENTRIFUGE =
             register("decanter_centrifuge", new decanterCentrifugeBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.METAL).noOcclusion()));

@@ -5,6 +5,10 @@ import net.mervyn.testosterone.blocks.testosteroneBlockEntities;
 import net.mervyn.testosterone.recipes.decantation;
 import net.mervyn.testosterone.recipes.testosteroneModRecipes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,7 +46,16 @@ public class decanterCentrifugeBlockEntity extends KineticBlockEntity {
                     List<decantation> allRecipes = findRecipe();
 
                     allRecipes.forEach(decantation -> {
-
+                        level.playSound(null, getBlockPos(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.25f, 1.5f);
+                        if (level instanceof ServerLevel serverLevel) {
+                            serverLevel.sendParticles(ParticleTypes.BUBBLE,
+                                    getBlockPos().getX() + 0.5,
+                                    getBlockPos().getY() + 0.5,
+                                    getBlockPos().getZ() + 0.5,
+                                    5, 0.15, 0.15, 0.15, 0.0);
+                        }
+                        setChanged();
+                        sendData();
                     });
                 }
                 return;

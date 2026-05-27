@@ -13,7 +13,8 @@
     "PackageItemMixin",
     "PackageStyleMixin",
     "LivingEntityMixin",
-    "ItemEntityMixin"
+    "ItemEntityMixin",
+    "RecipeManagerMixin"
   ],
   "client": [
     "playerRunningSound",
