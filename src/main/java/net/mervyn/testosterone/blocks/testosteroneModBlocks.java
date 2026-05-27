@@ -112,7 +112,14 @@ public class testosteroneModBlocks {
             register("cracked_pillar", new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.DEEPSLATE)));
 
     public static final BlockEntry<johnRock> JOHN_ROCK =
-            register("john_rock", new johnRock(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN).sound(SoundType.STONE).ignitedByLava().lightLevel(s -> 12).noOcclusion()), new Item.Properties().rarity(Rarity.EPIC));
+            register("john_rock", new johnRock(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)
+                    .sound(SoundType.STONE)
+                    .ignitedByLava()
+                    .lightLevel(s -> 12)
+                    .noOcclusion()
+                    .isSuffocating((state, level, pos) -> !state.getValue(johnRock.TOGGLED))
+                    .isViewBlocking((state, level, pos) -> !state.getValue(johnRock.TOGGLED))
+            ), new Item.Properties().rarity(Rarity.EPIC));
 
     public static final BlockEntry<Block> CHEESE_BLOCK =
             register("cheese_block", new Block(BlockBehaviour.Properties.copy(Blocks.HONEYCOMB_BLOCK)), new Item.Properties().food(testosteroneModFoods.CHEESE_BLOCK));

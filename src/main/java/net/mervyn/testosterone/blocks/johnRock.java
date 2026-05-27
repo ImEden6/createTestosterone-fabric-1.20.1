@@ -183,11 +183,4 @@ public class johnRock extends Block {
         return state.getValue(TOGGLED);
     }
 
-    public boolean isSuffocating(BlockState state, BlockGetter level, BlockPos pos) {
-        return !state.getValue(TOGGLED);
-    }
-
-    public boolean isViewBlocking(BlockState state, BlockGetter level, BlockPos pos) {
-        return !state.getValue(TOGGLED);
-    }
 }
