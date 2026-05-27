@@ -108,8 +108,8 @@ public class testosteroneModBlocks {
     public static final BlockEntry<bigBricks> BIG_AEQUALIS_BRICKS =
             register("big_aequalis_bricks", new bigBricks(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.DEEPSLATE)));
 
-    public static final BlockEntry<Block> CRACKED_PILLAR =
-            register("cracked_pillar", new Block(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.DEEPSLATE)));
+    public static final BlockEntry<RotatedPillarBlock> CRACKED_PILLAR =
+            register("cracked_pillar", new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.DEEPSLATE)));
 
     public static final BlockEntry<johnRock> JOHN_ROCK =
             register("john_rock", new johnRock(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN).sound(SoundType.STONE).ignitedByLava().lightLevel(s -> 12)), new Item.Properties().rarity(Rarity.EPIC));

@@ -1,9 +1,15 @@
 {
   "variants": {
-    "toggled=false": {
+    "pressed=false,toggled=false": {
       "model": "testosterone:block/john_rock_active"
     },
-    "toggled=true": {
+    "pressed=true,toggled=false": {
+      "model": "testosterone:block/john_rock_active"
+    },
+    "pressed=false,toggled=true": {
+      "model": "testosterone:block/john_rock_inactive"
+    },
+    "pressed=true,toggled=true": {
       "model": "testosterone:block/john_rock_inactive"
     }
   }

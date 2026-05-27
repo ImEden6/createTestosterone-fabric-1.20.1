@@ -33,6 +33,10 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import dev.emi.trinkets.api.client.TrinketRendererRegistry;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
+import net.mervyn.testosterone.blocks.blockModels.fragileCopycatModel;
 
 public class testosteroneClient implements ClientModInitializer {
 
@@ -118,5 +122,47 @@ public class testosteroneClient implements ClientModInitializer {
                     PartialModel.of(style.getRiggingModel())
             );
         });
+
+        // Model Loading Plugin for Fragile Copycat Block
+        ModelLoadingPlugin.register(pluginContext -> {
+            pluginContext.modifyModelAfterBake().register((model, context) -> {
+                ResourceLocation id = context.id();
+                if (id.getNamespace().equals(testosterone.MOD_ID) && id.getPath().equals("fragile_copycat_block")) {
+                    return new fragileCopycatModel(model);
+                }
+                return model;
+            });
+        });
+
+        // Flywheel Visual Registration for Decanter Centrifuge
+        dev.engine_room.flywheel.api.visualization.VisualizerRegistry.setVisualizer(
+            testosteroneBlockEntities.DECANTER_CENTRIFUGE.get(),
+            dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer.builder(testosteroneBlockEntities.DECANTER_CENTRIFUGE.get())
+                .factory(com.simibubi.create.content.kinetics.base.SingleAxisRotatingVisual.of(AllPartialModels.SHAFT)::create)
+                .apply()
+        );
+
+
+
+        // Register Fluid Render Handlers
+        registerFluidRenderHandler(testosteroneFluids.CHOLESTEROL_FLUID.getSource(), testosteroneFluids.CHOLESTEROL_FLUID.get(), "cholesterol_fluid");
+        registerFluidRenderHandler(testosteroneFluids.DILUTED_ZINC_FLUID.getSource(), testosteroneFluids.DILUTED_ZINC_FLUID.get(), "diluted_zinc_fluid");
+        registerFluidRenderHandler(testosteroneFluids.TESTOSTERONE_FLUID.getSource(), testosteroneFluids.TESTOSTERONE_FLUID.get(), "testosterone_fluid");
+        registerFluidRenderHandler(testosteroneFluids.ESTRONE_FLUID.getSource(), testosteroneFluids.ESTRONE_FLUID.get(), "estrone_fluid");
+        registerFluidRenderHandler(testosteroneFluids.TRENBOLONE_FLUID.getSource(), testosteroneFluids.TRENBOLONE_FLUID.get(), "trenbolone_fluid");
+        registerFluidRenderHandler(testosteroneFluids.BEER_FLUID.getSource(), testosteroneFluids.BEER_FLUID.get(), "beer_fluid");
+        registerFluidRenderHandler(testosteroneFluids.WHEY_FLUID.getSource(), testosteroneFluids.WHEY_FLUID.get(), "whey_fluid");
+        registerFluidRenderHandler(testosteroneFluids.CHEESE_FLUID.getSource(), testosteroneFluids.CHEESE_FLUID.get(), "cheese_fluid");
+    }
+
+    private void registerFluidRenderHandler(net.minecraft.world.level.material.Fluid still, net.minecraft.world.level.material.Fluid flowing, String name) {
+        FluidRenderHandlerRegistry.INSTANCE.register(
+            still,
+            flowing,
+            new SimpleFluidRenderHandler(
+                new ResourceLocation(testosterone.MOD_ID, "block/" + name + "_still"),
+                new ResourceLocation(testosterone.MOD_ID, "block/" + name + "_flow")
+            )
+        );
     }
 }

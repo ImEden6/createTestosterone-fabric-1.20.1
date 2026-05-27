@@ -6,16 +6,34 @@
       "tag": "c:wheat"
     },
     {
+      "tag": "c:wheat"
+    },
+    {
+      "tag": "c:wheat"
+    },
+    {
+      "tag": "c:wheat"
+    },
+    {
       "item": "minecraft:sugar"
     },
     {
-      "amount": 250,
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "amount": 1000,
       "fluid": "minecraft:water"
     }
   ],
   "results": [
     {
-      "amount": 25,
+      "amount": 100,
       "fluid": "testosterone:beer_fluid"
     }
   ]
