@@ -2,8 +2,10 @@ package net.mervyn.testosterone;
 
 import com.mojang.logging.LogUtils;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.mervyn.testosterone.advancements.testosteroneAdvancementUtils;
+import net.mervyn.testosterone.effects.afterlifeEffect;
 import net.mervyn.testosterone.blocks.testosteroneBlockEntities;
 import net.mervyn.testosterone.blocks.testosteroneModBlocks;
 import net.mervyn.testosterone.config.ConfigRegistry;
@@ -21,6 +23,8 @@ import net.mervyn.testosterone.potions.testosteroneModPotions;
 import net.mervyn.testosterone.recipes.testosteroneModRecipes;
 import net.mervyn.testosterone.sounds.testosteroneModSounds;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import org.slf4j.Logger;
 
 public class testosterone implements ModInitializer {
@@ -59,6 +63,14 @@ public class testosterone implements ModInitializer {
 
         // Advancement criteria
         testosteroneAdvancementUtils.register();
+
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
+            ServerPlayer player = handler.getPlayer();
+            if (player.hasEffect(testosteroneModEffects.AFTERLIFE_EFFECT.get())
+                    && player.level() instanceof ServerLevel serverLevel) {
+                afterlifeEffect.cleanupCorpse(player, serverLevel, false);
+            }
+        });
 
         LOGGER.info("Create: Testosterone initialized successfully!");
     }

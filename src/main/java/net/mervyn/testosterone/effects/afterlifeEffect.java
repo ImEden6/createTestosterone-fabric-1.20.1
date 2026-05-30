@@ -1,6 +1,7 @@
 package net.mervyn.testosterone.effects;
 
 import net.mervyn.testosterone.util.EntityDataUtil;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -30,11 +31,32 @@ public class afterlifeEffect extends MobEffect {
         super(MobEffectCategory.BENEFICIAL, 0x00FFFF);
     }
 
+    public static void cleanupCorpse(Player player, ServerLevel level, boolean teleportToCorpse) {
+        CompoundTag data = EntityDataUtil.get(player);
+        if (!data.hasUUID(CORPSE_KEY)) {
+            return;
+        }
+
+        UUID corpseUuid = data.getUUID(CORPSE_KEY);
+        Entity corpse = level.getEntity(corpseUuid);
+        if (corpse != null) {
+            if (teleportToCorpse) {
+                player.teleportTo(corpse.getX(), corpse.getY(), corpse.getZ());
+            }
+            corpse.discard();
+        }
+
+        data.remove(CORPSE_KEY);
+        data.remove(PROGRESS_KEY);
+    }
+
     @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
         super.addAttributeModifiers(entity, attributeMap, amplifier);
-        if (entity instanceof Player player && !player.level().isClientSide()) {
+        if (entity instanceof Player player && player.level() instanceof ServerLevel serverLevel) {
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BEACON_POWER_SELECT, SoundSource.PLAYERS, 1, 1f);
+
+            cleanupCorpse(player, serverLevel, false);
 
             ArmorStand corpseStand = EntityType.ARMOR_STAND.create(player.level());
             if (corpseStand != null) {
@@ -57,18 +79,10 @@ public class afterlifeEffect extends MobEffect {
     @Override
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         super.removeAttributeModifiers(entity, attributes, amplifier);
-        if (entity instanceof Player player && !player.level().isClientSide()) {
+        if (entity instanceof Player player && player.level() instanceof ServerLevel serverLevel) {
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1, 1f);
             player.setInvulnerable(false);
-
-            if (player.level() instanceof ServerLevel serverLevel && EntityDataUtil.get(player).hasUUID(CORPSE_KEY)) {
-                UUID playerCorpse = EntityDataUtil.get(player).getUUID(CORPSE_KEY);
-                Entity corpse = serverLevel.getEntity(playerCorpse);
-                if (corpse != null) {
-                    player.teleportTo(corpse.getX(), corpse.getY(), corpse.getZ());
-                    corpse.kill();
-                }
-            }
+            cleanupCorpse(player, serverLevel, true);
         }
     }
 
@@ -91,9 +105,8 @@ public class afterlifeEffect extends MobEffect {
             if (effectInstance != null) {
                 int duration = effectInstance.getDuration();
                 if (duration < 20 && duration >= 0) {
-                    if (corpse != null) {
-                        player.teleportTo(corpse.getX(), corpse.getY(), corpse.getZ());
-                        corpse.kill();
+                    if (player.level() instanceof ServerLevel serverLevel) {
+                        cleanupCorpse(player, serverLevel, true);
                     }
                     player.setInvulnerable(false);
                     player.kill();

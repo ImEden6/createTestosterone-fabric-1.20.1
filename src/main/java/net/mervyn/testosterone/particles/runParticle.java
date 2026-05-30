@@ -56,7 +56,8 @@ public class runParticle extends Particle {
 
     private final PoseStack scratch = new PoseStack();
 
-    public runParticle(ClientLevel lvl, UUID playerUUID, int duration, long time, double x, double y, double z) {
+    public runParticle(ClientLevel lvl, UUID playerUUID, int duration, long time, double x, double y, double z,
+                       PlayerModel<Player> sharedModel) {
         super(lvl, x, y, z);
 
         this.hasPhysics = false;
@@ -81,32 +82,34 @@ public class runParticle extends Particle {
             this.blue = 80f / 255f;
         }
 
-        PlayerModel<Player> model = new PlayerModel<>(
-                Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER),
-                false);
-
-        model.hat.visible = false;
-        model.jacket.visible = false;
-        model.leftSleeve.visible = false;
-        model.rightSleeve.visible = false;
-        model.leftPants.visible = false;
-        model.rightPants.visible = false;
+        sharedModel.hat.visible = true;
+        sharedModel.jacket.visible = true;
+        sharedModel.leftSleeve.visible = true;
+        sharedModel.rightSleeve.visible = true;
+        sharedModel.leftPants.visible = true;
+        sharedModel.rightPants.visible = true;
+        sharedModel.hat.visible = false;
+        sharedModel.jacket.visible = false;
+        sharedModel.leftSleeve.visible = false;
+        sharedModel.rightSleeve.visible = false;
+        sharedModel.leftPants.visible = false;
+        sharedModel.rightPants.visible = false;
 
         float pt = Minecraft.getInstance().getFrameTime();
         float limbSwing = player.walkAnimation.position();
         float limbSwingAmount = player.walkAnimation.speed();
 
-        model.attackTime = player.getAttackAnim(pt);
-        model.young = player.isBaby();
-        model.crouching = player.isCrouching();
+        sharedModel.attackTime = player.getAttackAnim(pt);
+        sharedModel.young = player.isBaby();
+        sharedModel.crouching = player.isCrouching();
 
         this.swimming = (player.getPose() == Pose.SWIMMING || roidRageEffect.isSwimming(player));
-        model.swimAmount = this.swimming ? 1.0F : player.getSwimAmount(pt);
+        sharedModel.swimAmount = this.swimming ? 1.0F : player.getSwimAmount(pt);
 
         float headYaw   = player.getYHeadRot() - player.getYRot();
         float headPitch = player.getXRot();
 
-        model.setupAnim(player,
+        sharedModel.setupAnim(player,
                 limbSwing,
                 limbSwingAmount,
                 player.tickCount + pt,
@@ -119,7 +122,7 @@ public class runParticle extends Particle {
             scratch.mulPose(Axis.XP.rotationDegrees(90));
         }
 
-        model.renderToBuffer(scratch, grab,
+        sharedModel.renderToBuffer(scratch, grab,
                 LightTexture.FULL_BRIGHT,
                 OverlayTexture.NO_OVERLAY,
                 1.0F, 1.0F, 1.0F, 1.0F);
@@ -207,6 +210,10 @@ public class runParticle extends Particle {
     }
 
     public static class Factory implements ParticleProvider<runParticleData> {
+        private final PlayerModel<Player> sharedModel = new PlayerModel<>(
+                Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER),
+                false);
+
         public Factory(SpriteSet spriteSet) {}
 
         @Override
@@ -224,7 +231,7 @@ public class runParticle extends Particle {
                 z += vel.z * mul;
             }
 
-            return new runParticle(level, data.playerUUID(), data.duration(), data.tick(), x, y, z);
+            return new runParticle(level, data.playerUUID(), data.duration(), data.tick(), x, y, z, sharedModel);
         }
     }
 }

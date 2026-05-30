@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1] - 2026-05-30
+
+### Fixed
+- **Afterlife corpse lifecycle**: Centralized `cleanupCorpse` to discard the ArmorStand and clear stored corpse/progress keys on effect removal, natural expiry, and pre-respawn; register disconnect cleanup so logging out mid-afterlife no longer leaves orphan stands in the world.
+- **John rock cluster cache**: Replaced the global static `BlockPos` set (shared across dimensions and retained between ticks) with a per-level, per-tick deduplication set passed through cluster propagation.
+- **Roid rage trail particles**: Reuse a single baked `PlayerModel` in `runParticle.Factory` instead of allocating and baking a new model for every trail particle.
+
 ## [1.1.0] - 2026-05-28
 
 ### Added

@@ -18,17 +18,35 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayDeque;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 @SuppressWarnings("deprecation")
 public class johnRock extends Block {
     public static final BooleanProperty TOGGLED = BooleanProperty.create("toggled");
     public static final BooleanProperty PRESSED = BooleanProperty.create("pressed");
 
-    private static long lastUpdateTick = -1;
-    private static final Set<BlockPos> updatedClusterPositions = new HashSet<>();
+    private static final class ClusterTickState {
+        long tick = -1;
+        final Set<BlockPos> positions = new HashSet<>();
+    }
+
+    private static final Map<Level, ClusterTickState> CLUSTER_POSITIONS =
+            Collections.synchronizedMap(new WeakHashMap<>());
+
+    private static Set<BlockPos> clusterPositionsThisTick(Level level) {
+        ClusterTickState state = CLUSTER_POSITIONS.computeIfAbsent(level, ignored -> new ClusterTickState());
+        long currentTick = level.getGameTime();
+        if (state.tick != currentTick) {
+            state.positions.clear();
+            state.tick = currentTick;
+        }
+        return state.positions;
+    }
 
     public johnRock(Properties properties) {
         super(properties);
@@ -46,12 +64,8 @@ public class johnRock extends Block {
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, level, pos, oldState, isMoving);
         if (!level.isClientSide()) {
-            long currentTick = level.getGameTime();
-            if (currentTick != lastUpdateTick) {
-                updatedClusterPositions.clear();
-                lastUpdateTick = currentTick;
-            }
-            if (updatedClusterPositions.contains(pos)) {
+            Set<BlockPos> updatedThisTick = clusterPositionsThisTick(level);
+            if (updatedThisTick.contains(pos)) {
                 return;
             }
             boolean isPowered = level.hasNeighborSignal(pos);
@@ -59,8 +73,8 @@ public class johnRock extends Block {
                 boolean newToggled = !state.getValue(TOGGLED);
                 BlockState newState = state.setValue(PRESSED, true).setValue(TOGGLED, newToggled);
                 level.setBlockAndUpdate(pos, newState);
-                updatedClusterPositions.add(pos);
-                propagateConnectedToggling(level, pos, newToggled);
+                updatedThisTick.add(pos);
+                propagateConnectedToggling(level, pos, newToggled, updatedThisTick);
             }
         }
     }
@@ -68,12 +82,8 @@ public class johnRock extends Block {
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean isMoving) {
         if (!level.isClientSide()) {
-            long currentTick = level.getGameTime();
-            if (currentTick != lastUpdateTick) {
-                updatedClusterPositions.clear();
-                lastUpdateTick = currentTick;
-            }
-            if (updatedClusterPositions.contains(pos)) {
+            Set<BlockPos> updatedThisTick = clusterPositionsThisTick(level);
+            if (updatedThisTick.contains(pos)) {
                 super.neighborChanged(state, level, pos, neighborBlock, fromPos, isMoving);
                 return;
             }
@@ -83,8 +93,8 @@ public class johnRock extends Block {
                 boolean newToggled = !state.getValue(TOGGLED);
                 BlockState newState = state.setValue(PRESSED, true).setValue(TOGGLED, newToggled);
                 level.setBlockAndUpdate(pos, newState);
-                updatedClusterPositions.add(pos);
-                propagateConnectedToggling(level, pos, newToggled);
+                updatedThisTick.add(pos);
+                propagateConnectedToggling(level, pos, newToggled, updatedThisTick);
             } else if (!isPowered && wasPressed) {
                 level.setBlockAndUpdate(pos, state.setValue(PRESSED, false));
             }
@@ -92,7 +102,7 @@ public class johnRock extends Block {
         super.neighborChanged(state, level, pos, neighborBlock, fromPos, isMoving);
     }
 
-    private void propagateConnectedToggling(Level level, BlockPos origin, boolean newToggled) {
+    private void propagateConnectedToggling(Level level, BlockPos origin, boolean newToggled, Set<BlockPos> updatedThisTick) {
         level.playSound(
                 null,
                 origin.getX(),
@@ -122,7 +132,7 @@ public class johnRock extends Block {
 
         while (!queue.isEmpty() && toggledCount < limit) {
             BlockPos currentPos = queue.poll();
-            updatedClusterPositions.add(currentPos);
+            updatedThisTick.add(currentPos);
 
             BlockState currentState = level.getBlockState(currentPos);
             if (currentState.getValue(johnRock.TOGGLED) != newToggled) {
