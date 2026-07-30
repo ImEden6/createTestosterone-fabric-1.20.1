@@ -210,11 +210,18 @@ public class runParticle extends Particle {
     }
 
     public static class Factory implements ParticleProvider<runParticleData> {
-        private final PlayerModel<Player> sharedModel = new PlayerModel<>(
-                Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER),
-                false);
+        private PlayerModel<Player> sharedModel;
 
         public Factory(SpriteSet spriteSet) {}
+
+        private PlayerModel<Player> getSharedModel() {
+            if (sharedModel == null) {
+                sharedModel = new PlayerModel<>(
+                        Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER),
+                        false);
+            }
+            return sharedModel;
+        }
 
         @Override
         public @Nullable Particle createParticle(runParticleData data, ClientLevel level,
@@ -231,7 +238,7 @@ public class runParticle extends Particle {
                 z += vel.z * mul;
             }
 
-            return new runParticle(level, data.playerUUID(), data.duration(), data.tick(), x, y, z, sharedModel);
+            return new runParticle(level, data.playerUUID(), data.duration(), data.tick(), x, y, z, getSharedModel());
         }
     }
 }

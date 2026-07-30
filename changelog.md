@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.2] - 2026-07-30
+
+### Fixed
+- **EMI build dependency**: Replaced a broken local-file EMI dependency reference in `build.gradle` (pointing to a machine-local sibling directory absent on CI) with the proper `curse.maven:emi-580555:8081374` coordinate, fixing `compileJava` failures on GitHub Actions.
+- **Trail particle startup crash**: Deferred baking the shared `PlayerModel` in `runParticle.Factory` from the constructor to first use, avoiding an `IllegalArgumentException: No model for layer minecraft:player#main` crash caused by baking the model before `EntityModelLoader` had registered it during client init.
+
 ## [1.1.1] - 2026-05-30
 
 ### Fixed
