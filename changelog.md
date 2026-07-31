@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3] - 2026-07-31
+
+### Added
+- **Configurable Roid Rage Trample Damage**: Added `Enable_Trample_Damage` server config option (defaults to `true`) to toggle whether sprinting into entities under Roid Rage deals trample damage.
+- **Configurable Tie Knockback Resistance**: Replaced binary Tie knockback immunity with `Tie_Knockback_Resistance` server config option (defaults to `1.0` / 100%), allowing server admins to configure fractional knockback reduction for the Tie accessory.
+- **Configurable Tie Void Protection**: Added `Enable_Tie_Void_Immunity` server config option (defaults to `true`) to toggle whether wearing a tie named `[matej]` protects against void fall damage death.
+
 ## [1.1.2] - 2026-07-30
 
 ### Fixed

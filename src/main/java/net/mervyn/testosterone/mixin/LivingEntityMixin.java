@@ -22,6 +22,7 @@ import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import dev.emi.trinkets.api.TrinketsApi;
@@ -77,12 +78,14 @@ public abstract class LivingEntityMixin {
         }
     }
 
-    @Inject(method = "knockback", at = @At("HEAD"), cancellable = true)
-    private void onKnockback(double strength, double ratioX, double ratioZ, CallbackInfo ci) {
+    @ModifyVariable(method = "knockback", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private double modifyKnockbackStrength(double strength) {
         LivingEntity entity = (LivingEntity) (Object) this;
         if (entity instanceof Player player && !getEquippedTie(player).isEmpty()) {
-            ci.cancel();
+            double resistance = ConfigRegistry.TIE_KNOCKBACK_RESISTANCE.get();
+            return strength * Math.max(0.0, 1.0 - resistance);
         }
+        return strength;
     }
 
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
@@ -112,7 +115,7 @@ public abstract class LivingEntityMixin {
             long endOfBlockTick = EntityDataUtil.get(entity).getLong("testosterone:end_of_block_tick");
             long beginTick = EntityDataUtil.get(entity).getLong("testosterone:begin_tick");
 
-            if (source.is(DamageTypes.FELL_OUT_OF_WORLD) && !matej) {
+            if (source.is(DamageTypes.FELL_OUT_OF_WORLD) && (!matej || !ConfigRegistry.ENABLE_TIE_VOID_IMMUNITY.get())) {
                 // Do not cancel generic/void death
             } else if (currentTick < endOfBlockTick) {
                 damageTaken += (int) amount;

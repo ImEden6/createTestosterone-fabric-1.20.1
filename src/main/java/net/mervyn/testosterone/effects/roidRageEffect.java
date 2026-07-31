@@ -176,7 +176,9 @@ public class roidRageEffect extends MobEffect {
                         EntityDataUtil.get(other).putLong(MARKED_KEY, level.getGameTime());
                         EntityDataUtil.get(other).putUUID(MARKED_BY_KEY, player.getUUID());
 
-                        other.hurt(CreateDamageSources.runOver(level, player), (float) speed / 50);
+                        if (ConfigRegistry.ENABLE_TRAMPLE_DAMAGE.get()) {
+                            other.hurt(CreateDamageSources.runOver(level, player), (float) speed / 50);
+                        }
                         level.playSound(null, player.blockPosition(), testosteroneModSounds.ENEMY_HIT_SFX.get(), SoundSource.PLAYERS);
 
                         other.addDeltaMovement(new Vec3(-Math.sin(rotRad) * speed * 0.01, speed * 0.002, Math.cos(rotRad) * speed * 0.01));

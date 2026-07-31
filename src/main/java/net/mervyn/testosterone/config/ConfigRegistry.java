@@ -52,6 +52,9 @@ public class ConfigRegistry {
     public static final ConfigValue<Integer> TRAIL_DURATION = new ConfigValue<>(() -> CONFIG.server.Trail_Duration);
     public static final ConfigValue<Double> FALL_DAMAGE_RADIUS = new ConfigValue<>(() -> CONFIG.server.Ground_Slam_Radius);
     public static final ConfigValue<Boolean> ALLOW_ELYTRA = new ConfigValue<>(() -> CONFIG.server.Allow_Elytra);
+    public static final ConfigValue<Boolean> ENABLE_TRAMPLE_DAMAGE = new ConfigValue<>(() -> CONFIG.server.Enable_Trample_Damage);
+    public static final ConfigValue<Double> TIE_KNOCKBACK_RESISTANCE = new ConfigValue<>(() -> CONFIG.server.Tie_Knockback_Resistance);
+    public static final ConfigValue<Boolean> ENABLE_TIE_VOID_IMMUNITY = new ConfigValue<>(() -> CONFIG.server.Enable_Tie_Void_Immunity);
 }
 
 

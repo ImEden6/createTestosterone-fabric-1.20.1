@@ -76,5 +76,11 @@ public class TestosteroneConfig implements ConfigData {
         public int Conversion_Range = 3;
         @Comment("Movement speed boost multiplier applied when riding the Stupid Rat. (Type: double)")
         public double Rat_Boost_Multiplier = 5.0;
+        @Comment("Whether running over entities deals trample/run-over damage during Roid Rage. (Type: boolean)")
+        public boolean Enable_Trample_Damage = true;
+        @Comment("Knockback resistance multiplier granted by the Tie accessory (0.0 = 0% resistance, 1.0 = 100% resistance). (Type: double)")
+        public double Tie_Knockback_Resistance = 1.0;
+        @Comment("Whether wearing a tie named [matej] grants void fall damage protection. (Type: boolean)")
+        public boolean Enable_Tie_Void_Immunity = true;
     }
 }
