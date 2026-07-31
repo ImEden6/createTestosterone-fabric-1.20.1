@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.4] - 2026-07-31
+
+### Added
+- **Configurable Man Power Invincibility**: Added `Enable_Man_Power_Invincibility` server config option (defaults to `true`) to toggle whether the Man Power effect (from the Testosterone Pill) cancels incoming damage.
+- **Configurable Afterlife Invulnerability**: Added `Enable_Afterlife_Invulnerability` server config option (defaults to `true`) to toggle whether the Afterlife effect grants full invulnerability, and `Afterlife_Duration` (defaults to `1200` ticks) to configure the length of that window.
+
 ## [1.1.3] - 2026-07-31
 
 ### Added

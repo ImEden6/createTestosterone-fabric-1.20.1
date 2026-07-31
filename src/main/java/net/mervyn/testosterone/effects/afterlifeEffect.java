@@ -1,5 +1,6 @@
 package net.mervyn.testosterone.effects;
 
+import net.mervyn.testosterone.config.ConfigRegistry;
 import net.mervyn.testosterone.util.EntityDataUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -91,7 +92,9 @@ public class afterlifeEffect extends MobEffect {
         if (pLivingEntity instanceof Player player) {
             Entity corpse = null;
 
-            player.setInvulnerable(true);
+            if (ConfigRegistry.ENABLE_AFTERLIFE_INVULNERABILITY.get()) {
+                player.setInvulnerable(true);
+            }
             player.addEffect(new MobEffectInstance(MobEffects.JUMP, 20, 3, true, false, false));
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20, 1, true, false, false));
             player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 0, true, false, false));

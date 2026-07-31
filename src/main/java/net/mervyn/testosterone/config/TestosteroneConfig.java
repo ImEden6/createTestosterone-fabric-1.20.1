@@ -82,5 +82,11 @@ public class TestosteroneConfig implements ConfigData {
         public double Tie_Knockback_Resistance = 1.0;
         @Comment("Whether wearing a tie named [matej] grants void fall damage protection. (Type: boolean)")
         public boolean Enable_Tie_Void_Immunity = true;
+        @Comment("Whether the Man Power effect grants damage-cancelling invincibility. (Type: boolean)")
+        public boolean Enable_Man_Power_Invincibility = true;
+        @Comment("Duration of the Afterlife effect's invulnerability window in ticks. (Type: int)")
+        public int Afterlife_Duration = 1200;
+        @Comment("Whether the Afterlife effect grants full invulnerability while active. (Type: boolean)")
+        public boolean Enable_Afterlife_Invulnerability = true;
     }
 }

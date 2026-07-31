@@ -54,7 +54,7 @@ public abstract class LivingEntityMixin {
                 player.removeAllEffects();
                 player.addEffect(new MobEffectInstance(
                         testosteroneModEffects.AFTERLIFE_EFFECT.get(),
-                        1200, // AFTERLIFE_DURATION
+                        ConfigRegistry.AFTERLIFE_DURATION.get(),
                         0,
                         true,
                         false,
@@ -94,7 +94,7 @@ public abstract class LivingEntityMixin {
         boolean hasEffect = entity.hasEffect(testosteroneModEffects.TESTOSTERONE_EFFECT.get());
         boolean notBlocking = !entity.isBlocking();
 
-        if (hasEffect && notBlocking) {
+        if (hasEffect && notBlocking && ConfigRegistry.ENABLE_MAN_POWER_INVINCIBILITY.get()) {
             boolean hasTie = false;
             boolean matej = false;
 

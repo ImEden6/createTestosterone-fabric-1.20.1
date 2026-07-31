@@ -55,6 +55,9 @@ public class ConfigRegistry {
     public static final ConfigValue<Boolean> ENABLE_TRAMPLE_DAMAGE = new ConfigValue<>(() -> CONFIG.server.Enable_Trample_Damage);
     public static final ConfigValue<Double> TIE_KNOCKBACK_RESISTANCE = new ConfigValue<>(() -> CONFIG.server.Tie_Knockback_Resistance);
     public static final ConfigValue<Boolean> ENABLE_TIE_VOID_IMMUNITY = new ConfigValue<>(() -> CONFIG.server.Enable_Tie_Void_Immunity);
+    public static final ConfigValue<Boolean> ENABLE_MAN_POWER_INVINCIBILITY = new ConfigValue<>(() -> CONFIG.server.Enable_Man_Power_Invincibility);
+    public static final ConfigValue<Integer> AFTERLIFE_DURATION = new ConfigValue<>(() -> CONFIG.server.Afterlife_Duration);
+    public static final ConfigValue<Boolean> ENABLE_AFTERLIFE_INVULNERABILITY = new ConfigValue<>(() -> CONFIG.server.Enable_Afterlife_Invulnerability);
 }
 
 
