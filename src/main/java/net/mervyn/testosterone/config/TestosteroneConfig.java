@@ -88,5 +88,7 @@ public class TestosteroneConfig implements ConfigData {
         public int Afterlife_Duration = 1200;
         @Comment("Whether the Afterlife effect grants full invulnerability while active. (Type: boolean)")
         public boolean Enable_Afterlife_Invulnerability = true;
+        @Comment("Whether wearing a tie caps accumulated Man Power damage for cooldown purposes (disable to make the Tie purely cosmetic for this mechanic). (Type: boolean)")
+        public boolean Enable_Tie_Damage_Cap = true;
     }
 }

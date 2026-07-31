@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.6] - 2026-07-31
+
+### Added
+- **Configurable Tie Damage Cap**: Added `Enable_Tie_Damage_Cap` server config option (defaults to `true`) to toggle whether wearing a tie (any tie, not just one named `[matej]`) caps accumulated Man Power damage for cooldown purposes. Disabling it makes the Tie purely cosmetic for this mechanic.
+
+### Fixed
+- **Tie damage cap inconsistency**: The in-window damage accumulation cap for tie-wearers was hardcoded to `100` instead of using the `Damage_Limit`/`TESTOSTERONE_MAX_DAMAGE` config value already used by the equivalent cap elsewhere in the same method, silently shortening Man Power cooldowns for anyone wearing a tie regardless of configured `Damage_Limit`.
+
 ## [1.1.5] - 2026-07-31
 
 ### Fixed

@@ -58,6 +58,7 @@ public class ConfigRegistry {
     public static final ConfigValue<Boolean> ENABLE_MAN_POWER_INVINCIBILITY = new ConfigValue<>(() -> CONFIG.server.Enable_Man_Power_Invincibility);
     public static final ConfigValue<Integer> AFTERLIFE_DURATION = new ConfigValue<>(() -> CONFIG.server.Afterlife_Duration);
     public static final ConfigValue<Boolean> ENABLE_AFTERLIFE_INVULNERABILITY = new ConfigValue<>(() -> CONFIG.server.Enable_Afterlife_Invulnerability);
+    public static final ConfigValue<Boolean> ENABLE_TIE_DAMAGE_CAP = new ConfigValue<>(() -> CONFIG.server.Enable_Tie_Damage_Cap);
 }
 
 

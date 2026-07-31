@@ -120,8 +120,8 @@ public abstract class LivingEntityMixin {
             } else if (currentTick < endOfBlockTick) {
                 damageTaken += (int) amount;
 
-                if (hasTie && damageTaken > 100) {
-                    damageTaken = 100;
+                if (hasTie && ConfigRegistry.ENABLE_TIE_DAMAGE_CAP.get() && damageTaken > ConfigRegistry.TESTOSTERONE_MAX_DAMAGE.get()) {
+                    damageTaken = ConfigRegistry.TESTOSTERONE_MAX_DAMAGE.get();
                 }
 
                 EntityDataUtil.get(entity).putInt("testosterone:damage_taken_key", damageTaken);
@@ -141,7 +141,7 @@ public abstract class LivingEntityMixin {
                 EntityDataUtil.get(entity).putLong("testosterone:end_of_block_tick", endOfBlockTick);
                 EntityDataUtil.get(entity).putLong("testosterone:begin_tick", currentTick);
 
-                if (hasTie && amount > ConfigRegistry.TESTOSTERONE_MAX_DAMAGE.get()) {
+                if (hasTie && ConfigRegistry.ENABLE_TIE_DAMAGE_CAP.get() && amount > ConfigRegistry.TESTOSTERONE_MAX_DAMAGE.get()) {
                     damageTaken = ConfigRegistry.TESTOSTERONE_MAX_DAMAGE.get();
                 } else {
                     damageTaken = (int) amount;
