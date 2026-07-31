@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.5] - 2026-07-31
+
+### Fixed
+- **Afterlife resurrection progress chat spam**: Replaced a per-tick `sendSystemMessage` call in `afterlifeEffect.java` (fired every tick while standing near your corpse during the Afterlife window) with a client-side action bar message, so the resurrection progress no longer floods the chat log.
+
 ## [1.1.4] - 2026-07-31
 
 ### Added

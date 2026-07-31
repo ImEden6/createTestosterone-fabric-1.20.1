@@ -136,7 +136,9 @@ public class afterlifeEffect extends MobEffect {
                         }
 
                         EntityDataUtil.get(player).putInt(PROGRESS_KEY, progress);
-                        player.sendSystemMessage(Component.literal(String.valueOf(progress)));
+                        if (player.level().isClientSide()) {
+                            player.displayClientMessage(Component.literal(String.valueOf(progress)), true);
+                        }
                     }
                 }
             }
