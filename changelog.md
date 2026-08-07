@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.7] - 2026-07-31
+
+### Fixed
+- **Stupid Rat boost not working**: Right-clicking with Cheese on a Stick now actually activates the speed boost while riding the Stupid Rat.
+
 ## [1.1.6] - 2026-07-31
 
 ### Added
